@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+
+    <title>serializeObject()</title>
+	
+</head>
+
+<body>
+
+<h1>serializeObject()</h1>
+
+  <form class="contact_form">
+
+    <label>Name</label><br />
+    <input type="text" name="name" />
+    
+    <br /><br />
+
+    <label>Age</label><br />
+    <input type="text" name="age" />
+
+    <br /><br />
+
+    <label>Country</label><br />
+    <input type="text" name="country" />
+
+    <br /><br />
+
+    <label>Married</label><br />
+    Yes: <input type="radio" name="married" value="yes" checked />
+    No: <input type="radio" name="married" value="no" />
+
+    <br /><br />
+
+    <label>Time</label><br />
+    Morning: <input type="checkbox" name="time" value="morning" />
+    Afternoon: <input type="checkbox" name="time" value="afternoon" checked />
+    Evening: <input type="checkbox" name="time" value="evening" />
+
+    <br /><br />
+
+    <input type="submit" value="submit" />
+
+  </form>
+
+         <script>
+
+
+          $.fn.serializeObject = function() {
+
+              //Get Form Values as Array
+              var form_values = $(this).serializeArray();
+
+              //log array - testing code
+              console.log(form_values);
+
+            
+              //Get Length of Array
+              var form_length = form_values.length;
+
+              //Create Starting Objects
+              var form_final = new Object;
+
+              //fill object with results
+                
+                $.each(form_values, function(){
+
+                  // Empty assign Null
+                  if( this.value == '') {
+
+                     form_final[this.name] = null;
+
+                  // Store multiple checkboxes as Array
+                  } else if(form_final.hasOwnProperty(this.name)) {
+
+                     
+                     if(typeof form_final[this.name] != 'object' ){
+                     
+                         firstItem = form_final[this.name];
+
+                         form_final[this.name] = new Object();
+
+                         form_final[this.name][firstItem] = true;
+
+                     }
+ 
+                     form_final[this.name][this.value] = true;
+
+                    
+
+                  } else {
+
+                    
+                    form_final[this.name] = this.value;
+
+                  
+                  }
+
+                  
+
+                });
+                
+                //Output Object
+                return form_final;
+
+          }
+
+
+          //Call Code on Submission
+          $('.contact_form').on('submit', function(){
+
+            console.log($(this).serializeObject());
+
+            return false;
+
+          });
+
+
+          </script>
+
+</body>
+</html>
