@@ -1,6 +1,6 @@
 serializeObject
 ===============
 
-First draft of what is intended to be a handy extention to jQuery and client side validation/result gathering.
+Second draft of what is intended to be a handy extention to jQuery for client side validation/result gathering.
 
-Looking at saving results to local storage as a possible next step after initial functionality is in place. 
+An option to save results to local storage is in place. 
