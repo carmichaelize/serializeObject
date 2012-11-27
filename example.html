@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="serializeObject.js"></script>
+
+    <title>serializeObject()</title>
+
+    <style>
+
+      body {
+        padding:0 2%;
+        font-family: sans-serif;
+      }
+
+      form {
+        width:48%;
+        float:left;
+      }
+
+      form.right {
+        float:right;
+      }
+
+      fieldset{
+        padding:20px;
+        border:3px solid red;
+      }
+      
+      legend{
+        font-weight: bold;
+      }
+
+    </style>
+	
+</head>
+
+<body>
+
+<h1>serializeObject()</h1>
+
+  <form class="form_1">
+    <fieldset>
+
+      <legend>Typical Example</legend>
+      <label>Name</label><br />
+      <input type="text" name="name" />
+      
+      <br /><br />
+
+      <label>Age</label><br />
+      <input type="text" name="age" />
+
+      <br /><br />
+
+      <label>Country</label><br />
+      <input type="text" name="country" />
+
+      <br /><br />
+
+      <label>Married</label><br />
+      Yes: <input type="radio" name="married" value="yes" checked />
+      No: <input type="radio" name="married" value="no" />
+
+      <br /><br />
+
+      <label>Time</label><br />
+      Morning: <input type="checkbox" name="time" value="morning" />
+      Afternoon: <input type="checkbox" name="time" value="afternoon" checked />
+      Evening: <input type="checkbox" name="time" value="evening" />
+
+      <br /><br />
+
+      <label>Family Members</label><br />
+      <select name="family_members">
+        <option value="0">0</option>
+        <option value="1">1</option>
+        <option value="2+">2+</option>
+      </select>
+
+      <br /><br />
+
+      <input type="submit" value="submit" />
+
+    </fieldset>
+
+  </form>
+
+  <form class="form_2 right">
+    
+    <fieldset>
+      
+      <legend>HTML5 Form Elements</legend>
+
+      <label>Multiselect</label><br />
+      <select name='multiselect' multiple="multiple">
+         <option value="volvo">Volvo</option>
+         <option value="saab">Saab</option>
+         <option value="opel">Opel</option>
+         <option value="audi">Audi</option>
+      </select>
+
+      <br /><br />
+
+      <label>Datalist</label><br />
+      <input type="text" list="numbers" name="datalist">
+      <datalist id="numbers">
+        <option value="Datalist Number 1">Datalist Number 1</option>
+        <option value="Datalist Number 2">Datalist Number 2</option>
+        <option value="Datalist Number 3">Datalist Number 3</option>
+        <option value="Datalist Number 4">Datalist Number 4</option>
+      </datalist>
+
+      <br /><br />
+
+      <label>Slider</label><br />
+      <input type="range" value="2" max="10" min="0" name="slider" />
+
+      <br /><br />
+
+      <label>Spinner</label><br />
+      <input type="number" value="2" max="10" min="0" name="spinner" />
+
+      <br /><br />
+
+      <label>Date</label><br />
+      <input type="date" name="date" />
+
+      <br /><br />
+
+      <label>Time</label><br />
+      <input type="time" name="time" />
+
+      <br /><br />
+
+      <input type="submit" value="submit" />
+
+    </fieldset>
+
+  </form>
+
+  <script>
+
+    //Call Code on Submission
+    $('.form_1').on('submit', function(){
+
+        var makeThisAnObject = $(this).serializeObject();
+
+        console.log(makeThisAnObject);
+
+        return false;
+
+    });
+
+    $('.form_2').on('submit', function(){
+
+        var makeThisAnObject = $(this).serializeObject();
+
+        console.log(makeThisAnObject);
+
+        return false;
+
+    });
+
+  </script>
+
+</body>
+</html>

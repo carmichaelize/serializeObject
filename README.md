@@ -1,6 +1,27 @@
-serializeObject
-===============
+##serializeObject()
 
-Second draft of what is intended to be a handy extention to jQuery for client side validation/result gathering.
+This is a handy extension to jQuery for client side validation/result gathering. serializeObject() returns an object comprising of key/value pairs relating to a submitted form.
 
-An option to save results to local storage is in place. 
+###Usage
+
+    <script>
+        $('#form').on('submit', function(){
+            var formData = $(this).serializeObject();
+        }); 
+    </script>
+
+###Supported (tested) Form Elements
+- text
+- radio
+- checkbox
+- select
+- multiselect
+- datalist
+- number(spinner)
+- range(slider)
+- date
+- time
+
+###Notes/Issues
+- The 'name' attribute is the only requirement for a key/value pair to be set on the object.
+- 'checkbox' and 'multiselect' elements will set the value as an object if more than one selection is made.
