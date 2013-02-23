@@ -25,3 +25,4 @@ This is a handy extension to jQuery for client side validation/result gathering.
 ###Notes/Issues
 - The 'name' attribute is the only requirement for a key/value pair to be set on the object.
 - 'checkbox' and 'multiselect' elements will set the value as an object if more than one selection is made.
+- Append '[]' to the end of input names to create an array.
