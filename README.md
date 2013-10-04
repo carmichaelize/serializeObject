@@ -1,24 +1,21 @@
 ##serializeObject()
 
-This handy jQuery extension provides support for client side validation/result gathering.
-serializeObject() returns an JavaScript object comprising of key/value pairs from submitted form.
-This allows you to access the form data from a single source point without having to gather each input value individually.
-Providing the form input has a name attribute, all inputs will be atomatically added to the returned object.
+This handy jQuery extension provides support for client side form data gathering. serializeObject() returns a JavaScript object comprising of key/value pairs from submitted form. This allows you to access the form data from a single source point without having to gather each value individually. Providing the input field has a name attribute set, all inputs will be automatically added to the returned object.
 
-This can be helpful as a further help to client side validation or for a more intergral part of a JavScript based web or mobile app.
+This can be helpful tool for validation and/or working with other event based functionality in JavaScript. As always with client side validation, this does not replace the need for validation on the server side.
+
+###Installation
+
+jQuery 1.3+ is the minimum requirement. Load the serializeObject() plugin script after the main jQuery library.
+	
+	<script src="/js/jquery-1.9.1.min.js"></script>
+	<script src="/js/serializeObject.js"></script>
 
 ###Usage
 
-	<script>
-	    $('#form').on('submit', function(){
-	        var formData = $('form').serializeObject();
-	    }); 
-	</script>
+	var formData = $('form').serializeObject();
 
 ###Supported (and Tested) Form Elements
-
-As most HTML5 form inputs natively behave like "text" elements, these naturally are supported.
-Also supported are more specific inputs such as radio, checkbox, multiselect which behave differently when serialized (see examples below).
 
 - text
 - radio
@@ -31,7 +28,11 @@ Also supported are more specific inputs such as radio, checkbox, multiselect whi
 - date
 - time
 
+As most HTML5 form inputs natively behave as "text" elements, these naturally are supported. Also supported are the more specific inputs such as radios, checkboxes, multiselects which behave differently when serialized (see examples below).
+
 ###Examples
+
+####Text Inputs
 
 Basic form validation.
 
@@ -43,7 +44,6 @@ Basic form validation.
 	</form>
 
 	<script>
-
 	    $('#form').on('submit', function(){
 			
 			//Gather form data
@@ -72,9 +72,9 @@ Basic form validation.
 	</script>
 
 
-####Multiselect and Checkboxes Inputs
+####Multiselect and Checkbox Inputs
 
-Inputs that can handle more than one value, will store the values as an object for that key. If only one choice is selected, the value will be stored as a string.
+Inputs that can handle more than one value, will store the values as an object. If only one choice is made, the value will be stored as a string.
 
 	<form id="form">
 		<label for="">Select Post Types To Include</label>
@@ -87,7 +87,6 @@ Inputs that can handle more than one value, will store the values as an object f
 	</form>
 
 	<script>
-
 	    $('#form').on('submit', function(){
 
 	       	//Gather form data
@@ -98,33 +97,46 @@ Inputs that can handle more than one value, will store the values as an object f
 
 	        if( data.post_type.posts || data.post_type.pages || data.post_type.products ){
 				alert('Save Options Updated!');
+				return true;
 	        }
+
+	        return false;
 
 	    });
 	</script>
 
 
-####Input Arrays
-To create an input array, append '[]' to the end of name attribute. This will return an array of values for that key.
+####Array Inputs (Linear & Associative)
+
+To create an array input, append '[]' to the end of the inputs name attribute. This will return an array of values. To create an associative array add a property name into the square brackets('[property_name]') and an object of key/values will be returned instead.
 
 	<form id="form">
-		<input type="text" name="email[]" value="test@test.com" />
-		<input type="text" name="email[]" value="test@test.co.uk" />
+		<label>Name</label>
+		<input type="text" placeholder="First Name" name="name[first_name]" value="Joe" />
+		<input type="text" placeholder="Last Name" name="name[last_name]" value="Bloggs" />
+		<br />
+		<label>Phone Number(s)</label>
+		<input type="text" placeholder="Work Email" name="email[]" value="test@test.com" />
+		<input type="text" placeholder="Home Email" name="email[]" value="test@test.co.uk" />
 		<button>Submit</button>
 	</form>
 
 	<script>
-
 	    $('#form').on('submit', function(){
 
 	        var formData = $(this).serializeObject();
 			
 			//Return Value(s)
-	        //formData.email = ["test@test.com", "test@test.co.uk"]
+			//data.name = {first_name : "Joe", last_name : "Bloggs"}
+	        //data.email = ["test@test.com", "test@test.co.uk"]
+
+	        if(data.name.first_name && data.name.last_name){
+	        	name = data.name.first_name+" "+data.name.last_name+", ";
+	        }
 
 			for(i=0;i<formData.email.length;i++){
 				if(formData.email[i]){
-					alert('Please Provide A Valid Email Address!');
+					alert(name+'Please Provide A Valid Email Address!');
 					return false;
 				}
 			}
@@ -136,8 +148,5 @@ To create an input array, append '[]' to the end of name attribute. This will re
 
 ###Notes/Issues
 
-- The 'name' attribute is the only requirement for a key/value pair to be set on the object.
-- 'checkbox' and 'multiselect' elements will set the value as an object if more than one selection is made.
-- I have tried to incorporate as many common form techniques I can think of, if you think I have missed any
-
-
+- The 'name' attribute is the only requirement for a key/value pair to be set on the object. If this is omitted from the input, the property will not be set in the returned object.
+- I have tried to incorporate as many common form inputs and techniques I can think of, if you think I have missed any let me know.
